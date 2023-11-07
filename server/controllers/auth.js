@@ -23,14 +23,15 @@ export const signin =async (req,res,next)=>{
         const user = await UserModel.findOne({email})
         if(!user) return next(customError(404,"User not found"))
 
-        const isCorrect = bcrypt.compareSync(password,user.password)
+        const isCorrect = bcrypt.compareSync(req.body.password,user.password)
         if(!isCorrect) return next(customError(400,"Wrong Credentials"))
 
         const token = jwt.sign({id:user._id},process.env.Secret)
 
+        const {password,...rest} = user._doc
         res.cookie("access_token",token,{
             httpOnly:true
-        }).status(200).json({password,...user._doc})
+        }).status(200).json(rest)
 
     } catch (error) {
         next(error)
