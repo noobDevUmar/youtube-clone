@@ -35,18 +35,18 @@ export const deleteuser=async(req,res,next)=>{
     return next(customError(400,"User not Authenticated"))
   }
 }
-export const getUser=(req,res,next)=>{
+export const getUser=async(req,res,next)=>{
 
 }
-export const sucribe=(req,res,next)=>{
+export const sucribe=async(req,res,next)=>{
 
 }
-export const unsubcribe=(req,res,next)=>{
+export const unsubcribe=async(req,res,next)=>{
 
 }
-export const likeVideo=(req,res,next)=>{
+export const likeVideo=async(req,res,next)=>{
 
 }
-export const dislikeVideo=(req,res,next)=>{
+export const dislikeVideo=async(req,res,next)=>{
 
 }

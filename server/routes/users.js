@@ -13,16 +13,16 @@ router.delete("/:id",verifyToken,deleteuser)
 router.get("/:id",getUser)
 
 // subcribe a user
-router.put("/find/:id",sucribe)
+router.put("/find/:id",verifyToken,sucribe)
 
 //unsubcribe a user
-router.put("/sub/:id",unsubcribe)
+router.put("/sub/:id",verifyToken,unsubcribe)
 
 //like a video
-router.put("/sub/:videoid",likeVideo)
+router.put("/sub/:videoid",verifyToken,likeVideo)
 
 //dislike a video
-router.put("/:videoid",dislikeVideo)
+router.put("/:videoid",verifyToken,dislikeVideo)
 
 
 export default router;
