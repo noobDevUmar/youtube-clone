@@ -57,6 +57,8 @@ export const getVideo = async(req,res,next)=>{
 
 
 export const addView = async(req,res,next)=>{
+
+    //  Find the video and increment views
     try {
         await VideoModel.findByIdAndUpdate(req.params.id,{
             $inc:{views:1}
