@@ -17,11 +17,11 @@ const UserSchema = new mongoose.Schema({
     },img:{
         type:String
     },
-    subcribers:{
+    subscribers:{
         type:Number,
         default:0
     },
-    subcribedChannels:{
+    subscribedChannels:{
         type:[String]
     }
 },{timestamps:true})

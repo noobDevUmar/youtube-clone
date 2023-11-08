@@ -10,16 +10,16 @@ router.put("/:id",verifyToken,update)
 router.delete("/:id",verifyToken,deleteuser)
 
 // get a user
-router.get("/:id",getUser)
+router.get("/find/:id",getUser)
 
 // subcribe a user
-router.put("/find/:id",verifyToken,sucribe)
+router.put("/sub/:id",verifyToken,sucribe)
 
 //unsubcribe a user
-router.put("/sub/:id",verifyToken,unsubcribe)
+router.put("/unsub/:id",verifyToken,unsubcribe)
 
 //like a video
-router.put("/sub/:videoid",verifyToken,likeVideo)
+router.put("/fd/:videoid",verifyToken,likeVideo)
 
 //dislike a video
 router.put("/:videoid",verifyToken,dislikeVideo)
