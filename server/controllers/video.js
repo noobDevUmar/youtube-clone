@@ -115,3 +115,34 @@ export const subcribedVideos = async(req,res,next)=>{
         next(error)
     }
 }
+
+
+// Search 
+
+export const getByTag = async(req,res,next)=>{
+    const query = req.query.tags // /tags?tags=one,two,three
+   const tags =  tags.split(",")
+
+    try {
+        const trendVideos = await VideoModel.find({tags:{$in:tags}}).limit(20)
+
+        res.json(trendVideos)
+        
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const search = async(req,res,next)=>{
+    const query = req.query.q
+    try {
+        const trendVideos = await VideoModel.find({
+            title:{ $regex:query,$options:"i"}
+        }).limit(20)
+
+        res.json(trendVideos)
+        
+    } catch (error) {
+        next(error)
+    }
+}
