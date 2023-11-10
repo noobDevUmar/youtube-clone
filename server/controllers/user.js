@@ -1,5 +1,8 @@
 import { customError } from "../error.js"
 import UserModel from "../models/User.js"
+import VideoModel from "../models/Video.js"
+
+
 export const update = async (req,res,next)=>{
   console.log(req.user);
   if(req.params.id===req.user.id){
@@ -89,9 +92,64 @@ export const unsubcribe=async(req,res,next)=>{
     next(error)
   }
 }
+
+
+// Like - Dislike
+
+
 export const likeVideo=async(req,res,next)=>{
+  const userid = req.user.id
+  const videoId = req.params.videoId;
 
+
+  try {
+    const video = await VideoModel.findById(req.params.videoId)
+    if (video.likes.includes(userid)) {
+    // User has already liked the video, so remove the like
+    await VideoModel.findByIdAndUpdate(videoId, {
+      $pull: { likes: userid },
+    });
+    res.status(200).json("Video Like Removed");
+  } else {
+    // User is liking the video for the first time
+    // Remove the user from the dislikes array if they have previously disliked the video
+    await VideoModel.findByIdAndUpdate(videoId, {
+      $addToSet: { likes: userid },   // this addToset method ensures that this array keeps the value only once
+      $pull: { dislikes: userid },   // if we like we have to remove that from dislikes if already disliked it 
+    });
+    res.status(200).json("Video Liked");
+  }
+
+} catch (error) {
+  next(error)
 }
-export const dislikeVideo=async(req,res,next)=>{
+}
 
+
+
+export const dislikeVideo=async(req,res,next)=>{
+  const userid = req.user.id
+  const videoId = req.params.videoId;
+
+  try {
+    const video = await VideoModel.findById(req.params.videoId)
+    if (video.dislikes.includes(userid)) {
+    // User has already liked the video, so remove the like
+    await VideoModel.findByIdAndUpdate(videoId, {
+      $pull: { dislikes: userid },
+    });
+    res.status(200).json("Video Dislike Removed");
+  } else {
+    // User is liking the video for the first time
+    // Remove the user from the dislikes array if they have previously disliked the video
+    await VideoModel.findByIdAndUpdate(videoId, {
+      $addToSet: { dislikes: userid },   // this addToset method ensures that this array keeps the value only once
+      $pull: { likes: userid },   // if we like we have to remove that from dislikes if already disliked it 
+    });
+    res.status(200).json("Video Disliked");
+  }
+
+} catch (error) {
+  next(error)
+}
 }
